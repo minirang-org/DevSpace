@@ -27,16 +27,19 @@ jobs:
               return;
             }
 
-            const { data: prDetails } = await github.rest.pullRequests.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+            const repoOwner = context.repo.owner;
+            const repoName = context.repo.repo;
+
+            const prDetails = await github.rest.pullRequests.get({
+              owner: repoOwner,
+              repo: repoName,
               pull_number: prNumber,
             });
-            const prAuthor = prDetails.user.login;
+            const prAuthor = prDetails.data.user.login;
 
             const reviews = await github.paginate(github.rest.pullRequests.listReviews, {
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner: repoOwner,
+              repo: repoName,
               pull_number: prNumber,
             });
 
