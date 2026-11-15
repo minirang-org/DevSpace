@@ -1,8 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { supabase } from '../supabaseClient'
 import "../css/workspace.css"
 
 function Workspace() {
+  const navigate = useNavigate()
   const [currentUserId, setCurrentUserId] = useState(import.meta.env.VITE_DEV_USER_ID || '')
   const [myWorkspaces, setMyWorkspaces] = useState([])
   const [searchQuery, setSearchQuery] = useState('')
@@ -212,7 +214,13 @@ function Workspace() {
                         <h3>{ws.name}</h3>
                         <span>{ws.role === 'owner' ? '방장' : '멤버'}</span>
                       </div>
-                      <button className="secondary-btn">입장</button>
+                      <button
+                        type="button"
+                        className="secondary-btn"
+                        onClick={() => navigate('/app')}
+                      >
+                        입장
+                      </button>
                     </div>
                   ))
                 ) : (
